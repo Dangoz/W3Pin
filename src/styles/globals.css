@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./ui.css";
+@import "./custom.css";
+
 html,
 body {
   padding: 0;
@@ -23,6 +26,7 @@ a {
   html {
     color-scheme: dark;
   }
+
   body {
     color: white;
     background: black;
