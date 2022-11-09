@@ -81,7 +81,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
                   className="w-full h-10 flex justify-start items-center cursor-pointer hover:bg-bgGrey gap-2 p-2"
                 >
                   <Image width={16} height={16} alt="handle-logo" src={`/${suffix}.png`} />
-                  <div>
+                  <div className="w-full overflow-x-scroll">
                     {input}
                     {suffixes.includes(getSuffix(input)) ? '' : `.${suffix}`}
                   </div>
