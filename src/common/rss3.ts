@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { RSS3_API_URL } from './endpoints'
-import { Identities, Tags } from '@/types/rss3'
+import type { Identities, Tags, Profile } from '@/types/rss3'
 
 const rss3API = axios.create({
   baseURL: RSS3_API_URL,
@@ -10,20 +10,28 @@ const rss3API = axios.create({
 })
 
 const rss3 = {
-  // get identities
   async getIdentities(addressOrHandle: string): Promise<Identities> {
     const response = await rss3API.get(`/identities/${addressOrHandle}`)
     return response.data as Identities
   },
 
-  // get notes count
-  async getNotesCount(addressOrHandle: string, tags: Tags[] = [], types: string[] = []): Promise<number> {
+  async getNotesCount(addressOrHandle: string, tag: Tags[] = [], type: string[] = []): Promise<number> {
     const response = await rss3API.post('notes', {
       address: [addressOrHandle],
-      tags,
-      types,
+      tag,
+      type,
       count_only: true,
     })
+    return response.data.total
+  },
+
+  async getProfiles(addressOrHandle: string): Promise<Profile[]> {
+    const response = await rss3API.get(`/profiles/${addressOrHandle}`)
+    return response.data.result as Profile[]
+  },
+
+  async getAssetsCount(addressOrHandle: string): Promise<number> {
+    const response = await rss3API.get(`/assets/${addressOrHandle}?timestamp=2022-00-00T00:00:00Z`)
     return response.data.total
   },
 }

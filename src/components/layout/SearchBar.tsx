@@ -3,7 +3,11 @@ import Modal from '../ui/Modal'
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon'
 import XMarkIcon from '@heroicons/react/24/Outline/XMarkIcon'
 import Image from 'next/image'
-import blurURL from '@/common/blur'
+import useTarget from '@/hooks/useTarget'
+import { handleError } from '@/common/notification'
+import rss3 from '@/common/rss3'
+import { Tags } from '@/types/rss3'
+import { parseProfiles } from '@/common/utils'
 
 const suffixes = ['eth', 'lens', 'csb']
 
@@ -18,8 +22,16 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
+  const { targetStore, setTargetStore } = useTarget()
   const [input, setInput] = useState('')
   const [results, setResults] = useState<string[]>([])
+
+  useEffect(() => {
+    if (open === false) {
+      setInput('')
+      setResults([])
+    }
+  }, [open])
 
   useEffect(() => {
     if (input.trim() === '') {
@@ -40,6 +52,32 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
     parseInput()
   }, [input])
 
+  const handleFetchTarget = async (addressOrHandle: string) => {
+    try {
+      if (addressOrHandle.trim() === '') {
+        return
+      }
+      const profiles = await rss3.getProfiles(addressOrHandle)
+      const profileResult = parseProfiles(profiles)
+
+      const newTarget = {
+        ...profileResult,
+        assets: await rss3.getAssetsCount(addressOrHandle),
+        transaction: await rss3.getNotesCount(addressOrHandle, [Tags.Transaction]),
+        exchange: await rss3.getNotesCount(addressOrHandle, [Tags.Exchange]),
+        collectible: await rss3.getNotesCount(addressOrHandle, [Tags.Collectible]),
+        social: await rss3.getNotesCount(addressOrHandle, [Tags.Social]),
+        donation: await rss3.getNotesCount(addressOrHandle, [Tags.Donation]),
+        governance: await rss3.getNotesCount(addressOrHandle, [Tags.Governance]),
+        poap: await rss3.getNotesCount(addressOrHandle, [Tags.Collectible], ['poap']),
+      }
+
+      setTargetStore(newTarget)
+    } catch (error) {
+      handleError(error)
+    }
+  }
+
   return (
     <>
       <Modal open={open} setOpen={setOpen} blur="sm" close={true}>
@@ -47,7 +85,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
           {/* search bar */}
           <div className="w-full h-9 flex justify-between items-center bg-foreground rounded-sm relative focus-within:ring-2 focus-within:ring-bgGrey">
             {/* search icon */}
-            <div className="w-10 h-full flex justify-center items-center absolute">
+            <div
+              className="w-10 h-full flex justify-center items-center absolute cursor-pointer"
+              onClick={() => handleFetchTarget(input)}
+            >
               <MagnifyingGlassIcon className="w-5 h-5 text-whtei" />
             </div>
 
@@ -59,6 +100,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
               onChange={(e) => setInput(e.target.value)}
               placeholder={'Search by Address or Handle'}
               autoFocus={false}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleFetchTarget(input)
+                }
+              }}
             />
 
             {/* clear button */}
@@ -79,11 +125,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
                 <div
                   key={suffix}
                   className="w-full h-10 flex justify-start items-center cursor-pointer hover:bg-bgGrey gap-2 p-2"
+                  onClick={() =>
+                    handleFetchTarget(`${input}${suffixes.includes(getSuffix(input)) ? '' : `.${suffix}`}`)
+                  }
                 >
                   <Image width={16} height={16} alt="handle-logo" src={`/${suffix}.png`} />
                   <div className="w-full overflow-x-scroll">
-                    {input}
-                    {suffixes.includes(getSuffix(input)) ? '' : `.${suffix}`}
+                    {`${input}${suffixes.includes(getSuffix(input)) ? '' : `.${suffix}`}`}
                   </div>
                 </div>
               ))}

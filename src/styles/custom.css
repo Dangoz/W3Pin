@@ -9,3 +9,11 @@
 .dropShadows-lg {
   box-shadow: drop-shadow(0 12px 24px rgb(0 0 0 / 0.15)) drop-shadow(0 12px 14px rgb(0 0 0 / 0.1));
 }
+
+.gradientBG {
+  @apply bg-gradient-to-r from-gradientOne via-gradientTwo to-gradientThree
+}
+
+.gradientText {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-gradientOne via-gradientTwo to-gradientThree
+}

@@ -1,3 +1,12 @@
+export enum Tags {
+  Transaction = 'transaction',
+  Exchange = 'exchange',
+  Collectible = 'collectible',
+  Social = 'social',
+  Donation = 'donation',
+  Governance = 'governance',
+}
+
 export type Identities = {
   address: string
   ens?: string
@@ -8,11 +17,15 @@ export type Identities = {
   bit?: string
 }
 
-export enum Tags {
-  Transaction = 'transaction',
-  Exchange = 'exchange',
-  Collectible = 'collectible',
-  Social = 'social',
-  Donation = 'donation',
-  Governance = 'governance',
+export type Profile = {
+  address: string
+  network: string
+  platform: string
+  source: string
+  name: string
+  handle: string
+  bio: string
+  expire_at?: Date
+  profile_uri?: string[]
+  social_uri?: string[]
 }
