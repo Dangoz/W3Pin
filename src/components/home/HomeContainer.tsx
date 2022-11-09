@@ -9,13 +9,13 @@ const HomeContainer: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center w-full h-screen">
+      <div className="flex justify-center items-center w-full min-h-screen">
         {!targetStore ? (
           <div className="flex items-center justify-center gap-2">
             <Image width={450} height={450} alt="logo" src="/logo-bg.png" className="rounded-full primaryShadow" />
           </div>
         ) : (
-          <div>123</div>
+          <PinCard />
         )}
       </div>
     </>

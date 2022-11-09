@@ -87,7 +87,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
         },
       },
       success: {
-        autoClose: 2500,
+        autoClose: 1000,
         render() {
           return 'Success!'
         },
