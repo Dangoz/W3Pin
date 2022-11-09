@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Modal from '../ui/Modal'
-import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon'
-import { XMarkIcon } from '@heroicons/react/24/Outline'
+import SearchIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon'
 import Image from 'next/image'
+import XMarkIcon from '@heroicons/react/24/Outline/XMarkIcon'
 import useTarget from '@/hooks/useTarget'
 import { handleError } from '@/common/notification'
 import rss3 from '@/common/rss3'
@@ -111,7 +111,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
               className="w-10 h-full flex justify-center items-center absolute cursor-pointer"
               onClick={() => handleFetchTarget(input)}
             >
-              <MagnifyingGlassIcon className="w-5 h-5 text-whtei" />
+              <SearchIcon className="w-5 h-5 text-whtei" />
             </div>
 
             {/* search input */}
