@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Modal from '../ui/Modal'
 import MagnifyingGlassIcon from '@heroicons/react/24/outline/MagnifyingGlassIcon'
-import XMarkIcon from '@heroicons/react/24/Outline/XMarkIcon'
+import { XMarkIcon } from '@heroicons/react/24/Outline'
 import Image from 'next/image'
 import useTarget from '@/hooks/useTarget'
 import { handleError } from '@/common/notification'
