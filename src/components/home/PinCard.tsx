@@ -6,10 +6,19 @@ import { parseAddress } from '@/common/utils'
 import { Target } from '@/types/target'
 import * as htmlToImage from 'html-to-image'
 import * as html2canvas from 'html2canvas'
+import useUser from '@/hooks/useUser'
+import api, { baseUrl } from '@/common/api'
+import axios from 'axios'
+import { handleSuccess, handleError, handleInfo } from '@/common/notification'
+import { toast } from 'react-toastify'
+import nftport from '@/common/nftport'
+import { dataURLtoFile } from '@/common/utils'
+import type { IPFSMetadataInput, IPFSMetadataOutput } from '@/types/nftport'
 
 const stats = ['assets', 'poap', 'transaction', 'exchange', 'collectible', 'social', 'donation', 'governance']
 
 const PinCard: React.FC = () => {
+  const { userStore } = useUser()
   const { targetStore } = useTarget()
   const [banner, setBanner] = useState<string>('/banner.jpg')
   const [editMode, setEditMode] = useState<boolean>(false)
@@ -20,23 +29,74 @@ const PinCard: React.FC = () => {
   const generateImage = async () => {
     const node = pinRef.current
     if (node) {
-      const dataUrl = await htmlToImage.toPng(node)
-      setPinImage(dataUrl)
-      return dataUrl
+      const data = await htmlToImage.toPng(node)
+      return data
     }
     return ''
   }
 
   const handleDownloadPin = async () => {
-    const pinImageUrl = pinImage === '' ? await generateImage() : pinImage
-    if (pinImageUrl === '') {
+    const pinImageFile = pinImage === '' ? await generateImage() : pinImage
+    if (pinImageFile === '') {
+      handleInfo('Image Gnereation Failed, Please Try Again')
       return
     }
 
     const link = document.createElement('a')
     link.download = 'W3Pin.png'
-    link.href = pinImageUrl
+    link.href = pinImageFile
     link.click()
+  }
+
+  const handleMintPin = async () => {
+    try {
+      if (targetStore === null) {
+        return
+      }
+      const pinImageFile = pinImage === '' ? await generateImage() : pinImage
+      if (pinImageFile === '') {
+        handleInfo('Image Gnereation Failed, Please Try Again')
+        return
+      }
+
+      const mintProcesses = async () => {
+        // upload image file of pin to ipfs
+        const formData = new FormData()
+        const file = dataURLtoFile(pinImageFile, 'W3Pin.png')
+        formData.append('file', file)
+        const ipfsUrl = await nftport.uploadFile(formData)
+
+        // upload metadata to ipfs
+        const metadataInput: IPFSMetadataInput = {
+          name: 'W3Pin',
+          description: 'W3Pin',
+          file_url: ipfsUrl,
+          attributes: [],
+        }
+        const metadataOutput: IPFSMetadataOutput = await nftport.uploadMetadata(metadataInput)
+
+        // mint nft
+        const mintTo = userStore.address === targetStore.address ? userStore.address : targetStore.address
+        const txHash = await nftport.mintPin(mintTo, metadataOutput.metadata_uri)
+        return txHash
+      }
+
+      toast.promise(mintProcesses(), {
+        pending: {
+          theme: 'dark',
+          render: () => 'Minting Pin...',
+        },
+        success: {
+          render: (data) => {
+            return `Pin minted successfully, txHash: ${data.data}`
+          },
+        },
+        error: 'Minting Pin Failed',
+      })
+    } catch (error) {
+      console.error((error as Error).message)
+      handleError(error)
+    }
   }
 
   if (!targetStore) {
@@ -103,7 +163,7 @@ const PinCard: React.FC = () => {
         {!editMode ? (
           <div className="flex items-center w-96 primaryShadow">
             <Button
-              className="w-1/3"
+              className="w-1/3 rounded-none"
               shadow={false}
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -113,11 +173,11 @@ const PinCard: React.FC = () => {
               Edit
             </Button>
 
-            <Button className="w-1/3" shadow={false} variant="secondary">
-              Mint
+            <Button className="w-1/3 rounded-none" shadow={false} variant="secondary" onClick={handleMintPin}>
+              {userStore.address === targetStore.address ? 'Mint' : 'Gift'}
             </Button>
 
-            <Button className="w-1/3" shadow={false} onClick={handleDownloadPin}>
+            <Button className="w-1/3 rounded-none" shadow={false} onClick={handleDownloadPin}>
               Download
             </Button>
           </div>

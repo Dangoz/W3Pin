@@ -11,9 +11,9 @@
 }
 
 .gradientBG {
-  @apply bg-gradient-to-r from-gradientOne via-gradientTwo to-gradientThree
+  @apply bg-gradient-to-r from-gradientOne to-gradientThree
 }
 
 .gradientText {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-gradientOne via-gradientTwo to-gradientThree
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-gradientOne to-gradientThree
 }
