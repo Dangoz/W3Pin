@@ -14,9 +14,9 @@ module.exports = {
         bgGrey: '#374151',
         primary: '#2563eb',
         secondary: 'rgba(192, 132, 252, 0.5)',
-        gradientOne: '#BBF7D0',
-        gradientTwo: '#7DD3FC',
-        gradientThree: '#C084FC',
+        gradientOne: '#3461FF',
+        // gradientTwo: '#3461FF',
+        gradientThree: '#8454EB',
       },
       boxShadow: "0 0 10px #29d, 0 0 5px #29d"
     },

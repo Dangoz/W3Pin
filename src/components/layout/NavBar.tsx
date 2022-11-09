@@ -7,7 +7,7 @@ import SearchTrigger from './SearchTrigger'
 const NavBar: React.FC = () => {
   return (
     <>
-      <div className="w-screen h-16 p-4 flex justify-between items-center fixed top-0">
+      <div className="w-screen h-16 z-50 p-4 flex justify-between items-center fixed top-0">
         {/* logo */}
         <div className="pt-6">
           <Image

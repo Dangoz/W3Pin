@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import useTarget from '@/hooks/useTarget'
 import Image from 'next/image'
 import Button from '../ui/Button'
 import { parseAddress } from '@/common/utils'
 import { Target } from '@/types/target'
+import * as htmlToImage from 'html-to-image'
+import * as html2canvas from 'html2canvas'
 
 const stats = ['assets', 'poap', 'transaction', 'exchange', 'collectible', 'social', 'donation', 'governance']
 
@@ -12,6 +14,30 @@ const PinCard: React.FC = () => {
   const [banner, setBanner] = useState<string>('/banner.jpg')
   const [editMode, setEditMode] = useState<boolean>(false)
   const [description, setDescription] = useState<string>('2022 Footprints!')
+  const pinRef = useRef<HTMLDivElement>(null)
+  const [pinImage, setPinImage] = useState<string>('')
+
+  const generateImage = async () => {
+    const node = pinRef.current
+    if (node) {
+      const dataUrl = await htmlToImage.toPng(node)
+      setPinImage(dataUrl)
+      return dataUrl
+    }
+    return ''
+  }
+
+  const handleDownloadPin = async () => {
+    const pinImageUrl = pinImage === '' ? await generateImage() : pinImage
+    if (pinImageUrl === '') {
+      return
+    }
+
+    const link = document.createElement('a')
+    link.download = 'W3Pin.png'
+    link.href = pinImageUrl
+    link.click()
+  }
 
   if (!targetStore) {
     return <></>
@@ -19,10 +45,13 @@ const PinCard: React.FC = () => {
 
   return (
     <>
-      <div className="w-full h-full flex justify-center items-center flex-col my-36 gap-5">
-        <div className="w-96 min-h-[800px] bg-bgBlue/80 rounded-md pb-10 flex flex-col backdrop-blur-md">
+      <div className="w-full h-full flex justify-center items-center flex-col my-32 gap-3">
+        <div
+          className="w-96 min-h-[800px] bg-bgBlue/75 rounded-md pb-10 flex flex-col backdrop-blur-md my-2"
+          ref={pinRef}
+        >
           {/* banner */}
-          <Image width={450} height={450} className="w-full h-fit rounded-t-md" alt="banner" src={banner} />
+          <img width={450} height={450} className="w-full h-fit rounded-t-md" alt="banner" src={banner} />
 
           {/* profile */}
           <div className="flex justify-around items-center pt-2">
@@ -42,8 +71,6 @@ const PinCard: React.FC = () => {
           </div>
 
           {/* stats */}
-
-          {/* title named stats */}
           <div className="flex justify-start items-center gap-2 mt-6 mb-3 ml-5 text-2xl">Stats</div>
           <div className="grid grid-cols-3 gap-3 px-5">
             {stats.map((stat) => (
@@ -59,12 +86,12 @@ const PinCard: React.FC = () => {
           {/* achievements */}
           <div className="flex justify-start items-center gap-2 mt-6 mb-3 ml-5 text-2xl">Achievements</div>
           <div className="grid grid-cols-3 gap-0 px-5">
-            {targetStore.assets >= 50 && <Image alt="hatch-achievement" src="/hatch.png" width={300} height={300} />}
+            {targetStore.assets >= 50 && <img alt="hatch-achievement" src="/hatch.png" width={300} height={300} />}
             {targetStore.transaction >= 30 && (
-              <Image alt="achiever-achievement" src="/achiever.png" width={300} height={300} />
+              <img alt="achiever-achievement" src="/achiever.png" width={300} height={300} />
             )}
             {targetStore.social >= 100 && (
-              <Image alt="influencer-achievement" src="/influencer.png" width={300} height={300} />
+              <img alt="influencer-achievement" src="/influencer.png" width={300} height={300} />
             )}
           </div>
 
@@ -90,7 +117,7 @@ const PinCard: React.FC = () => {
               Mint
             </Button>
 
-            <Button className="w-1/3" shadow={false}>
+            <Button className="w-1/3" shadow={false} onClick={handleDownloadPin}>
               Download
             </Button>
           </div>
