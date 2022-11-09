@@ -57,6 +57,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
       if (addressOrHandle.trim() === '') {
         return
       }
+      setOpen(false)
       const profiles = await rss3.getProfiles(addressOrHandle)
       const profileResult = parseProfiles(profiles)
 
