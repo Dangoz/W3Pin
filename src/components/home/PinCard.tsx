@@ -45,9 +45,9 @@ const PinCard: React.FC = () => {
 
   return (
     <>
-      <div className="w-full h-full flex justify-center items-center flex-col my-32 gap-3">
+      <div className="w-full h-full flex justify-center items-center flex-col mt-16 mb-28 gap-3">
         <div
-          className="w-96 min-h-[800px] bg-bgBlue/75 rounded-md pb-10 flex flex-col backdrop-blur-md my-2"
+          className="w-96 min-h-[800px] bg-bgBlue/75 rounded-md pb-10 flex flex-col backdrop-blur-md my-2 shadow-lg shadow-cyan-300/25"
           ref={pinRef}
         >
           {/* banner */}
