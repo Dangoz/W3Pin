@@ -15,14 +15,7 @@ export const TargetContextProvider = ({ children }: { children: React.ReactNode 
     <targetContext.Provider
       value={{
         targetStore,
-        setTargetStore: (stateChange: Partial<Target>) => {
-          setTargetStore((prevState) => {
-            if (prevState === null) {
-              return null
-            }
-            return { ...prevState, ...stateChange }
-          })
-        },
+        setTargetStore,
       }}
     >
       {children}

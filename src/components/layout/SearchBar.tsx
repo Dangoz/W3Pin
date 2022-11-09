@@ -8,6 +8,7 @@ import { handleError } from '@/common/notification'
 import rss3 from '@/common/rss3'
 import { Tags } from '@/types/rss3'
 import { parseProfiles } from '@/common/utils'
+import { toast } from 'react-toastify'
 
 const suffixes = ['eth', 'lens', 'csb']
 
@@ -52,11 +53,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
     parseInput()
   }, [input])
 
-  const handleFetchTarget = async (addressOrHandle: string) => {
-    try {
+  const handleFetchTarget = (addressOrHandle: string) => {
+    const fetchTarget = async () => {
       if (addressOrHandle.trim() === '') {
         return
       }
+
       setOpen(false)
       const profiles = await rss3.getProfiles(addressOrHandle)
       const profileResult = parseProfiles(profiles)
@@ -74,9 +76,28 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
       }
 
       setTargetStore(newTarget)
-    } catch (error) {
-      handleError(error)
     }
+
+    const fetchTargetPromise = fetchTarget()
+    toast.promise(fetchTargetPromise, {
+      pending: {
+        theme: 'dark',
+        render() {
+          return "Querying target's RSS3 profile..."
+        },
+      },
+      success: {
+        autoClose: 2500,
+        render() {
+          return 'Success!'
+        },
+      },
+      error: {
+        render({ data }) {
+          return `${(data as Error).message}`
+        },
+      },
+    })
   }
 
   return (

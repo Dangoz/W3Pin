@@ -12,6 +12,9 @@ const rss3API = axios.create({
 const rss3 = {
   async getIdentities(addressOrHandle: string): Promise<Identities> {
     const response = await rss3API.get(`/identities/${addressOrHandle}`)
+    if (response.data.error) {
+      throw new Error(response.data.error)
+    }
     return response.data as Identities
   },
 
@@ -22,16 +25,25 @@ const rss3 = {
       type,
       count_only: true,
     })
+    if (response.data.error) {
+      throw new Error(response.data.error)
+    }
     return response.data.total
   },
 
   async getProfiles(addressOrHandle: string): Promise<Profile[]> {
     const response = await rss3API.get(`/profiles/${addressOrHandle}`)
+    if (response.data.error) {
+      throw new Error(response.data.error)
+    }
     return response.data.result as Profile[]
   },
 
   async getAssetsCount(addressOrHandle: string): Promise<number> {
     const response = await rss3API.get(`/assets/${addressOrHandle}?timestamp=2022-00-00T00:00:00Z`)
+    if (response.data.error) {
+      throw new Error(response.data.error)
+    }
     return response.data.total
   },
 }

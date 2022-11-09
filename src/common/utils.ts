@@ -16,8 +16,8 @@ export const parseAddress = (address: string): string => {
   return address.slice(0, 4) + '...' + address.slice(-4)
 }
 
-export const parseProfiles = (profiles: Profile[]): Identities & { avatar?: string } => {
-  const result: Identities & { avatar?: string } = { address: profiles[0].address }
+export const parseProfiles = (profiles: Profile[]): Identities & { avatar: string } => {
+  const result: Identities & { avatar: string } = { address: profiles[0].address, avatar: '/logo-bg.png' }
   profiles.forEach((profile) => {
     switch (profile.platform) {
       case 'Crossbell':

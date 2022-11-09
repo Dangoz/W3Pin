@@ -3,10 +3,10 @@ import { toast } from 'react-toastify'
 export const handleError = (error: Error | any) => {
   const message = error?.data?.message || error?.message
   console.error(message)
-  toast('Oops! Something went wrong. Please try again later.', {
+  toast(message, {
     type: 'error',
     position: 'bottom-left',
-    autoClose: 2500,
+    autoClose: 3500,
     icon: '🚨',
     theme: 'dark',
   })
