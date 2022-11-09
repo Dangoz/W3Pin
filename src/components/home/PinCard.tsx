@@ -111,7 +111,7 @@ const PinCard: React.FC = () => {
           ref={pinRef}
         >
           {/* banner */}
-          <img width={450} height={450} className="w-full h-fit rounded-t-md" alt="banner" src={banner} />
+          <Image width={450} height={450} className="w-full h-fit rounded-t-md" alt="banner" src={banner} />
 
           {/* profile */}
           <div className="flex justify-around items-center pt-2">
@@ -146,12 +146,12 @@ const PinCard: React.FC = () => {
           {/* achievements */}
           <div className="flex justify-start items-center gap-2 mt-6 mb-3 ml-5 text-2xl">Achievements</div>
           <div className="grid grid-cols-3 gap-0 px-5">
-            {targetStore.assets >= 50 && <img alt="hatch-achievement" src="/hatch.png" width={300} height={300} />}
+            {targetStore.assets >= 50 && <Image alt="hatch-achievement" src="/hatch.png" width={300} height={300} />}
             {targetStore.transaction >= 30 && (
-              <img alt="achiever-achievement" src="/achiever.png" width={300} height={300} />
+              <Image alt="achiever-achievement" src="/achiever.png" width={300} height={300} />
             )}
             {targetStore.social >= 100 && (
-              <img alt="influencer-achievement" src="/influencer.png" width={300} height={300} />
+              <Image alt="influencer-achievement" src="/influencer.png" width={300} height={300} />
             )}
           </div>
 
