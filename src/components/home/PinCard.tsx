@@ -86,11 +86,7 @@ const PinCard: React.FC = () => {
               Edit
             </Button>
 
-            <Button
-              className="w-1/3"
-              shadow={false}
-              // variant='gradient'
-            >
+            <Button className="w-1/3" shadow={false} variant="secondary">
               Mint
             </Button>
 
