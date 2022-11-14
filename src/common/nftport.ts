@@ -34,11 +34,11 @@ const nftport = {
   },
 
   // customizable mint of pin nft
-  async mintPin(mintTo: string, metadataURL: string): Promise<string | null> {
+  async mintPin(mintTo: string, meatadataUrl: string): Promise<string | null> {
     const response = await nftportAPI.post('/v0/mints/customizable', {
       chain: 'polygon',
       contract_address: process.env.W3PIN_CONTRACT_ADDRESS,
-      metadata_uri: metadataURL,
+      metadata_uri: meatadataUrl,
       mint_to_address: mintTo,
     })
     console.log('RESULT', response.data)

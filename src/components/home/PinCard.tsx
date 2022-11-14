@@ -65,26 +65,29 @@ const PinCard: React.FC = () => {
         formData.append('file', file)
         console.log('formData', formData)
         console.log('file', formData.get('file'))
-        const response = await api.post('/nftport/file', formData, {
+        const fileResponse = await api.post('/nftport/file', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         })
-        console.log('response', response.data.message)
+        const ipfsUrl = fileResponse.data.ipfsUrl
 
-        // // upload metadata to ipfs
-        // const metadataInput: IPFSMetadataInput = {
-        //   name: 'W3Pin',
-        //   description: 'W3Pin',
-        //   file_url: ipfsUrl,
-        //   attributes: [],
-        // }
-        // const metadataOutput: IPFSMetadataOutput = await nftport.uploadMetadata(metadataInput)
+        // upload metadata to ipfs
+        const metadataInput: IPFSMetadataInput = {
+          name: 'W3Pin',
+          description: 'W3Pin',
+          file_url: ipfsUrl,
+          attributes: [],
+        }
+        const metadataReponse = await api.post('/nftport/metadata', { metadataInput })
+        const metadataUrl = metadataReponse.data.metadataUrl
 
-        // // mint nft
-        // const mintTo = userStore.address === targetStore.address ? userStore.address : targetStore.address
-        // const txHash = await nftport.mintPin(mintTo, metadataOutput.metadata_uri)
-        // return txHash
+        // mint nft
+        const mintTo = userStore.address === targetStore.address ? userStore.address : targetStore.address
+        const mintResponse = await api.post('/nftport/mint', { mintTo, metadataUrl })
+        const txHash = mintResponse.data.transactionHash
+        console.log('txHash', txHash)
+        return txHash
       }
 
       toast.promise(mintProcesses(), {
@@ -93,6 +96,9 @@ const PinCard: React.FC = () => {
           render: () => 'Minting Pin...',
         },
         success: {
+          progressStyle: {
+            background: 'linear-gradient(to right, #3461FF, #8454EB)',
+          },
           render: (data) => {
             return `Pin minted successfully, txHash: ${data.data}`
           },

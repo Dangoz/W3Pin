@@ -7,7 +7,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    console.log('content-type', req.headers['content-type'])
     const ipfsUrl = await nftport.uploadFile(req, req.headers['content-type'] as string)
 
     res.status(200).json({ ipfsUrl, message: 'file upload successful' })
