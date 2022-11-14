@@ -2,7 +2,7 @@ import React from 'react'
 import useTarget from '@/hooks/useTarget'
 import SearchTrigger from '../layout/SearchTrigger'
 import Image from 'next/image'
-import PinCard from './PinCard'
+import PinCardWrapper from './PinCardWrapper'
 
 const HomeContainer: React.FC = () => {
   const { targetStore } = useTarget()
@@ -22,7 +22,7 @@ const HomeContainer: React.FC = () => {
             />
           </div>
         ) : (
-          <PinCard />
+          <PinCardWrapper />
         )}
       </div>
     </>

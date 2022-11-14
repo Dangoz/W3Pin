@@ -17,7 +17,7 @@ const Modal: React.FC<DialogProps> = ({ children, open, setOpen, blur = undefine
       <Dialog.Portal>
         <Dialog.Overlay
           className={clsx(
-            'fixed inset-0 bg-black bg-opacity-50 transition-opacity',
+            'fixed inset-0 bg-black bg-opacity-50 transition-opacity z-[9999]',
             'flex justify-center items-center',
             blur === 'sm' && 'backdrop-blur-sm',
             blur === 'md' && 'backdrop-blur-md',
