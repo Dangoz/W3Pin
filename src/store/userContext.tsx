@@ -4,7 +4,7 @@ import type { User, UserContext } from '@/types/user'
 const userInitialStates: UserContext = {
   userStore: {
     address: '',
-    avatar: '/logo-bg.png',
+    avatar: '/logo.svg',
   },
   setUserStore: () => {},
 }
