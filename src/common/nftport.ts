@@ -1,29 +1,30 @@
 import { NFTPORT_API_URL } from '@/common/endpoints'
 import axios from 'axios'
 import type { IPFSMetadataInput, IPFSMetadataOutput } from '@/types/nftport'
+import { NextApiRequest } from 'next'
 
 const nftportAPI = axios.create({
   baseURL: NFTPORT_API_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: process.env.NEXT_PUBLIC_NFTPORT_API_KEY,
+    Authorization: process.env.NFTPORT_API_KEY,
   },
 })
 
 const nftport = {
   // upload a file to ipfs on the server
-  async uploadFile(formData: FormData): Promise<string> {
-    const response = await axios.post(`${NFTPORT_API_URL}/v0/files`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: process.env.NEXT_PUBLIC_NFTPORT_API_KEY,
-      },
-    })
-    if (response.data.error) {
-      throw new Error(response.data.error)
+  async uploadFile(req: NextApiRequest, contentType: string): Promise<string> {
+    try {
+      const response = await axios.post(`${NFTPORT_API_URL}/v0/files`, req, {
+        headers: {
+          'Content-Type': contentType,
+          Authorization: process.env.NFTPORT_API_KEY,
+        },
+      })
+      return response.data.ipfs_url
+    } catch (error) {
+      throw new Error((error as any)?.response?.data.error.message)
     }
-    console.log('data', response.data)
-    return response.data.ipfs_url
   },
 
   // upload metadata to ipfs
@@ -36,7 +37,7 @@ const nftport = {
   async mintPin(mintTo: string, metadataURL: string): Promise<string | null> {
     const response = await nftportAPI.post('/v0/mints/customizable', {
       chain: 'polygon',
-      contract_address: process.env.NEXT_PUBLIC_W3PIN_CONTRACT_ADDRESS,
+      contract_address: process.env.W3PIN_CONTRACT_ADDRESS,
       metadata_uri: metadataURL,
       mint_to_address: mintTo,
     })

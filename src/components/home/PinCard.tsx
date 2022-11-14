@@ -5,14 +5,13 @@ import Button from '../ui/Button'
 import { parseAddress } from '@/common/utils'
 import { Target } from '@/types/target'
 import * as htmlToImage from 'html-to-image'
-import * as html2canvas from 'html2canvas'
 import useUser from '@/hooks/useUser'
 import api, { baseUrl } from '@/common/api'
 import axios from 'axios'
 import { handleSuccess, handleError, handleInfo } from '@/common/notification'
 import { toast } from 'react-toastify'
 import nftport from '@/common/nftport'
-import { dataURLtoFile } from '@/common/utils'
+import { convertBase64ToFile } from '@/common/utils'
 import type { IPFSMetadataInput, IPFSMetadataOutput } from '@/types/nftport'
 
 const stats = ['assets', 'poap', 'transaction', 'exchange', 'collectible', 'social', 'donation', 'governance']
@@ -62,23 +61,30 @@ const PinCard: React.FC = () => {
       const mintProcesses = async () => {
         // upload image file of pin to ipfs
         const formData = new FormData()
-        const file = dataURLtoFile(pinImageFile, 'W3Pin.png')
+        const file = convertBase64ToFile(pinImageFile, 'W3Pin.png')
         formData.append('file', file)
-        const ipfsUrl = await nftport.uploadFile(formData)
+        console.log('formData', formData)
+        console.log('file', formData.get('file'))
+        const response = await api.post('/nftport/file', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        console.log('response', response.data.message)
 
-        // upload metadata to ipfs
-        const metadataInput: IPFSMetadataInput = {
-          name: 'W3Pin',
-          description: 'W3Pin',
-          file_url: ipfsUrl,
-          attributes: [],
-        }
-        const metadataOutput: IPFSMetadataOutput = await nftport.uploadMetadata(metadataInput)
+        // // upload metadata to ipfs
+        // const metadataInput: IPFSMetadataInput = {
+        //   name: 'W3Pin',
+        //   description: 'W3Pin',
+        //   file_url: ipfsUrl,
+        //   attributes: [],
+        // }
+        // const metadataOutput: IPFSMetadataOutput = await nftport.uploadMetadata(metadataInput)
 
-        // mint nft
-        const mintTo = userStore.address === targetStore.address ? userStore.address : targetStore.address
-        const txHash = await nftport.mintPin(mintTo, metadataOutput.metadata_uri)
-        return txHash
+        // // mint nft
+        // const mintTo = userStore.address === targetStore.address ? userStore.address : targetStore.address
+        // const txHash = await nftport.mintPin(mintTo, metadataOutput.metadata_uri)
+        // return txHash
       }
 
       toast.promise(mintProcesses(), {
@@ -146,12 +152,12 @@ const PinCard: React.FC = () => {
           {/* achievements */}
           <div className="flex justify-start items-center gap-2 mt-6 mb-3 ml-5 text-2xl">Achievements</div>
           <div className="grid grid-cols-3 gap-0 px-5">
-            {targetStore.assets >= 50 && <Image alt="hatch-achievement" src="/hatch.png" width={300} height={300} />}
+            {targetStore.assets >= 50 && <Image alt="hatch-achievement" src="/hatch.svg" width={300} height={300} />}
             {targetStore.transaction >= 30 && (
-              <Image alt="achiever-achievement" src="/achiever.png" width={300} height={300} />
+              <Image alt="achiever-achievement" src="/achiever.svg" width={300} height={300} />
             )}
             {targetStore.social >= 100 && (
-              <Image alt="influencer-achievement" src="/influencer.png" width={300} height={300} />
+              <Image alt="influencer-achievement" src="/influencer.svg" width={300} height={300} />
             )}
           </div>
 

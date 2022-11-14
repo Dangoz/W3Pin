@@ -149,13 +149,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
               {results.map((suffix) => (
                 <div
                   key={suffix}
-                  className="w-full h-10 flex justify-start items-center cursor-pointer hover:bg-bgGrey gap-2 p-2"
+                  className="w-full h-full flex justify-start items-center cursor-pointer hover:bg-bgGrey gap-2 p-2"
                   onClick={() =>
                     handleFetchTarget(`${input}${suffixes.includes(getSuffix(input)) ? '' : `.${suffix}`}`)
                   }
                 >
-                  <Image width={16} height={16} alt="handle-logo" src={`/${suffix}.png`} />
-                  <div className="w-full overflow-x-scroll">
+                  <div className="w-6 h-6 relative rounded-full">
+                    <Image fill alt="handle-logo" src={`/${suffix}.png`} sizes="100%" />
+                  </div>
+                  <div className="w-fit overflow-x-scroll">
                     {`${input}${suffixes.includes(getSuffix(input)) ? '' : `.${suffix}`}`}
                   </div>
                 </div>
