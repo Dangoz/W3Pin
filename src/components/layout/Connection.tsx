@@ -5,7 +5,7 @@ import useUser from '@/hooks/useUser'
 import Button from '../ui/Button'
 import rss3 from '@/common/rss3'
 import { handleError } from '@/common/notification'
-import { parseProfiles } from '@/common/utils'
+import { parseProfiles, parseAddress } from '@/common/utils'
 import ToolTip from '../ui/ToolTip'
 
 const Connection = () => {
@@ -17,7 +17,7 @@ const Connection = () => {
     const syncUserProfiles = async () => {
       try {
         const profiles = await rss3.getProfiles(address)
-        const result = parseProfiles(profiles)
+        const result = profiles.length ? parseProfiles(profiles) : { address }
         setUserStore(result)
       } catch (error) {
         handleError(error)
@@ -33,7 +33,7 @@ const Connection = () => {
     <div className="flex justify-center items-center gap-1">
       {isConnected ? (
         <div className="flex justify-center items-center gap-1 h-full w-fit p-2">
-          <ToolTip message={userStore.crossbell || userStore.ens || userStore.lens || address}>
+          <ToolTip message={userStore.crossbell || userStore.ens || userStore.lens || parseAddress(address)}>
             <div className="w-9 h-9 rounded-full gradientBG flex justify-center items-center primaryShadow cursor-pointer">
               <img alt="avatar" src={userStore.avatar} className="object-cover rounded-full w-8 h-8" />
             </div>
