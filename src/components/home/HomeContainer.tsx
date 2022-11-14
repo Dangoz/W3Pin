@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import useTarget from '@/hooks/useTarget'
 import Image from 'next/image'
 import PinCardWrapper from './PinCardWrapper'
 
 const HomeContainer: React.FC = () => {
-  const { targetStore } = useTarget()
+  const { targetStore, setTargetStore } = useTarget()
+
+  // retrieve most recent card/target for current session
+  useEffect(() => {
+    const data = sessionStorage.getItem('card')
+    if (data) {
+      const cache = JSON.parse(data)
+      setTargetStore(cache)
+    }
+  }, [setTargetStore])
 
   return (
     <>

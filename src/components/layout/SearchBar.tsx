@@ -96,6 +96,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
       }
 
       setTargetStore(newTarget)
+
+      // cache most recent target/card for current session
+      sessionStorage.setItem('card', JSON.stringify(newTarget))
     }
 
     if (addressOrHandle.trim() === '') {
