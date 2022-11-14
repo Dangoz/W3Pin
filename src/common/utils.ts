@@ -29,7 +29,7 @@ export const convertBase64ToFile = (base64: string, filename: string): File => {
   return new File([u8arr], filename, { type: mime })
 }
 
-export const parseProfiles = (profiles: Profile[], identities: Identities): Identities & { avatar: string } => {
+export const parseProfiles = (identities: Identities, profiles: Profile[]): Identities & { avatar: string } => {
   const result: Identities & { avatar: string } = { ...identities, avatar: '/logo.svg' }
   profiles.forEach((profile) => {
     switch (profile.platform) {

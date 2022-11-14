@@ -55,20 +55,44 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
   const handleFetchTarget = (addressOrHandle: string) => {
     const fetchTarget = async () => {
       setOpen(false)
-      const identities = await rss3.getIdentities(addressOrHandle)
-      const profiles = await rss3.getProfiles(addressOrHandle)
-      const profileResult = parseProfiles(profiles, identities)
+
+      const identitiesPromise = rss3.getIdentities(addressOrHandle)
+      const profilesPromise = rss3.getProfiles(addressOrHandle)
+      const assetsPromise = rss3.getAssetsCount(addressOrHandle)
+      const transactionPromise = rss3.getNotesCount(addressOrHandle, [Tags.Transaction])
+      const exchangePromise = rss3.getNotesCount(addressOrHandle, [Tags.Exchange])
+      const collectiblePromise = rss3.getNotesCount(addressOrHandle, [Tags.Collectible])
+      const socialPromise = rss3.getNotesCount(addressOrHandle, [Tags.Social])
+      const donationPromise = rss3.getNotesCount(addressOrHandle, [Tags.Donation])
+      const governancePromise = rss3.getNotesCount(addressOrHandle, [Tags.Governance])
+      const poapPromise = rss3.getNotesCount(addressOrHandle, [Tags.Collectible], ['poap'])
+
+      const [identities, profiles, assets, transaction, exchange, collectible, social, donation, governance, poap] =
+        await Promise.all([
+          identitiesPromise,
+          profilesPromise,
+          assetsPromise,
+          transactionPromise,
+          exchangePromise,
+          collectiblePromise,
+          socialPromise,
+          donationPromise,
+          governancePromise,
+          poapPromise,
+        ])
+
+      const profileResult = parseProfiles(identities, profiles)
 
       const newTarget = {
         ...profileResult,
-        assets: await rss3.getAssetsCount(addressOrHandle),
-        transaction: await rss3.getNotesCount(addressOrHandle, [Tags.Transaction]),
-        exchange: await rss3.getNotesCount(addressOrHandle, [Tags.Exchange]),
-        collectible: await rss3.getNotesCount(addressOrHandle, [Tags.Collectible]),
-        social: await rss3.getNotesCount(addressOrHandle, [Tags.Social]),
-        donation: await rss3.getNotesCount(addressOrHandle, [Tags.Donation]),
-        governance: await rss3.getNotesCount(addressOrHandle, [Tags.Governance]),
-        poap: await rss3.getNotesCount(addressOrHandle, [Tags.Collectible], ['poap']),
+        assets,
+        transaction,
+        exchange,
+        collectible,
+        social,
+        donation,
+        governance,
+        poap,
       }
 
       setTargetStore(newTarget)
