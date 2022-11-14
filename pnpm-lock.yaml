@@ -1,8 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@heroicons/react': ^2.0.13
   '@radix-ui/react-dialog': ^1.0.2
+  '@radix-ui/react-icons': ^1.1.1
   '@radix-ui/react-toolbar': ^1.0.1
   '@radix-ui/react-tooltip': ^1.0.2
   '@rainbow-me/rainbowkit': ^0.7.4
@@ -35,8 +35,8 @@ specifiers:
   wagmi: ^0.7.13
 
 dependencies:
-  '@heroicons/react': 2.0.13_react@18.2.0
   '@radix-ui/react-dialog': 1.0.2_2zx2umvpluuhvlq44va5bta2da
+  '@radix-ui/react-icons': 1.1.1_react@18.2.0
   '@radix-ui/react-toolbar': 1.0.1_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-tooltip': 1.0.2_2zx2umvpluuhvlq44va5bta2da
   '@rainbow-me/rainbowkit': 0.7.4_bousnu2f6klaiq3n35xn5vysui
@@ -560,14 +560,6 @@ packages:
       - '@types/react'
     dev: false
 
-  /@heroicons/react/2.0.13_react@18.2.0:
-    resolution: {integrity: sha512-iSN5XwmagrnirWlYEWNPdCDj9aRYVD/lnK3JlsC9/+fqGF80k8C7rl+1HCvBX0dBoagKqOFBs6fMhJJ1hOg1EQ==}
-    peerDependencies:
-      react: '>= 16'
-    dependencies:
-      react: 18.2.0
-    dev: false
-
   /@humanwhocodes/config-array/0.11.7:
     resolution: {integrity: sha512-kBbPWzN8oVMLb0hOUYXhmxggL/1cJE6ydvjDIGi9EnAGUyA7cLVKQg+d/Dsm+KZwx2czGHrCmMVLiyg8s5JPKw==}
     engines: {node: '>=10.10.0'}
@@ -891,6 +883,14 @@ packages:
       '@radix-ui/react-use-callback-ref': 1.0.0_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@radix-ui/react-icons/1.1.1_react@18.2.0:
+    resolution: {integrity: sha512-xc3wQC59rsFylVbSusQCrrM+6695ppF730Q6yqzhRdqDcRNWIm2R6ngpzBoSOQMcwnq4p805F+Gr7xo4fmtN1A==}
+    peerDependencies:
+      react: ^16.x || ^17.x || ^18.x
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /@radix-ui/react-id/1.0.0_react@18.2.0:

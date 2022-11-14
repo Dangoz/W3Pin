@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Modal from '../ui/Modal'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
-import { XMarkIcon } from '@heroicons/react/24/solid'
+import { Cross2Icon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import useTarget from '@/hooks/useTarget'
 import { handleError } from '@/common/notification'
 import rss3 from '@/common/rss3'
@@ -83,7 +82,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
       pending: {
         theme: 'dark',
         render() {
-          return "Querying target's RSS3 profile..."
+          return `Querying target's RSS3 profile...`
         },
       },
       success: {
@@ -92,7 +91,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
         },
         autoClose: 750,
         render() {
-          return 'Success!'
+          return `${addressOrHandle} Found!`
         },
       },
       error: {
@@ -135,7 +134,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
             {/* clear button */}
             <div className="w-10 h-full flex justify-center items-center absolute right-0">
               {input && (
-                <XMarkIcon
+                <Cross2Icon
                   className="w-6 h-6 text-white cursor-pointer border-2 border-bgGrey rounded-sm hover:bg-bgGrey"
                   onClick={() => setInput('')}
                 />

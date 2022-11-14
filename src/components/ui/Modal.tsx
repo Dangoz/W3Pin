@@ -1,6 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import clsx from 'clsx'
-import XMarkIcon from '@heroicons/react/24/solid/XMarkIcon'
+import { Cross2Icon } from '@radix-ui/react-icons'
 
 interface DialogProps {
   children: React.ReactNode
@@ -29,8 +29,8 @@ const Modal: React.FC<DialogProps> = ({ children, open, setOpen, blur = undefine
             <Dialog.Title />
             <Dialog.Description />
             {close && (
-              <Dialog.Close className="absolute top-0 right-0 p-16">
-                <XMarkIcon className="w-6 h-6" />
+              <Dialog.Close className="absolute top-0 right-0 m-14 p-2">
+                <Cross2Icon className="w-6 h-6" />
               </Dialog.Close>
             )}
           </Dialog.Content>
