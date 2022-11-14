@@ -1,24 +1,24 @@
 import React, { useEffect } from 'react'
-import useTarget from '@/hooks/useTarget'
+import useCard from '@/hooks/useCard'
 import Image from 'next/image'
-import PinCardWrapper from './PinCardWrapper'
+import PinCardWrapper from './PinCardWrapperStale'
 
 const HomeContainer: React.FC = () => {
-  const { targetStore, setTargetStore } = useTarget()
+  const { cardStore, setCardStore } = useCard()
 
   // retrieve most recent card/target for current session
   useEffect(() => {
     const data = sessionStorage.getItem('card')
     if (data) {
       const cache = JSON.parse(data)
-      setTargetStore(cache)
+      setCardStore(cache)
     }
-  }, [setTargetStore])
+  }, [setCardStore])
 
   return (
     <>
       <div className="flex justify-center items-center w-full min-h-screen">
-        {!targetStore ? (
+        {!cardStore ? (
           <div className="flex items-center justify-center gap-2">
             <div className="relative w-80 h-80">
               <Image

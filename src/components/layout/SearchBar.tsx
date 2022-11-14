@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Modal from '../ui/Modal'
 import Image from 'next/image'
 import { Cross2Icon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import useTarget from '@/hooks/useTarget'
+import useCard from '@/hooks/useCard'
 import { handleError } from '@/common/notification'
 import rss3 from '@/common/rss3'
 import { Tags } from '@/types/rss3'
@@ -22,7 +22,7 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
-  const { targetStore, setTargetStore } = useTarget()
+  const { cardStore, setCardStore } = useCard()
   const [input, setInput] = useState('')
   const [results, setResults] = useState<string[]>([])
 
@@ -52,8 +52,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
     parseInput()
   }, [input])
 
-  const handleFetchTarget = (addressOrHandle: string) => {
-    const fetchTarget = async () => {
+  const handleGenerateCard = (addressOrHandle: string) => {
+    const generateCard = async () => {
       setOpen(false)
 
       const identitiesPromise = rss3.getIdentities(addressOrHandle)
@@ -83,7 +83,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
 
       const profileResult = parseProfiles(identities, profiles)
 
-      const newTarget = {
+      const newCard = {
         ...profileResult,
         assets,
         transaction,
@@ -93,19 +93,21 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
         donation,
         governance,
         poap,
+        banner: '/banner2.png',
+        description: 'lalala',
+        achievements: [],
       }
+      setCardStore(newCard)
 
-      setTargetStore(newTarget)
-
-      // cache most recent target/card for current session
-      sessionStorage.setItem('card', JSON.stringify(newTarget))
+      // cache most recent card for current session
+      sessionStorage.setItem('card', JSON.stringify(newCard))
     }
 
     if (addressOrHandle.trim() === '') {
       return
     }
 
-    const fetchTargetPromise = fetchTarget()
+    const fetchTargetPromise = generateCard()
     toast.promise(fetchTargetPromise, {
       pending: {
         theme: 'dark',
@@ -139,7 +141,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
             {/* search icon */}
             <div
               className="w-10 h-full flex justify-center items-center absolute cursor-pointer"
-              onClick={() => handleFetchTarget(input)}
+              onClick={() => handleGenerateCard(input)}
             >
               <MagnifyingGlassIcon className="w-5 h-5 text-whtei" />
             </div>
@@ -154,7 +156,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
               autoFocus={false}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  handleFetchTarget(input)
+                  handleGenerateCard(input)
                 }
               }}
             />
@@ -178,7 +180,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
                   key={suffix}
                   className="w-full h-full flex justify-start items-center cursor-pointer hover:bg-bgGrey gap-2 p-2"
                   onClick={() =>
-                    handleFetchTarget(`${input}${suffixes.includes(getSuffix(input)) ? '' : `.${suffix}`}`)
+                    handleGenerateCard(`${input}${suffixes.includes(getSuffix(input)) ? '' : `.${suffix}`}`)
                   }
                 >
                   <div className="w-6 h-6 relative rounded-full">

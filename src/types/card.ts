@@ -21,5 +21,5 @@ export type Card = {
 
 export type CardContext = {
   cardStore: Card | null
-  setCardStore: (card: Partial<Card>) => void
+  setCardStore: (card: Card) => void
 }
