@@ -12,14 +12,16 @@ const HomeContainer: React.FC = () => {
       <div className="flex justify-center items-center w-full min-h-screen">
         {!targetStore ? (
           <div className="flex items-center justify-center gap-2">
-            <Image
-              width={450}
-              height={450}
-              alt="logo"
-              src="/logo-bg.png"
-              priority={true}
-              className="rounded-full primaryShadow w-auto h-auto"
-            />
+            <div className="relative w-80 h-80">
+              <Image
+                fill
+                alt="logo"
+                src="/logo-bg.png"
+                priority={true}
+                className="rounded-full primaryShadow"
+                sizes="100%"
+              />
+            </div>
           </div>
         ) : (
           <PinCardWrapper />
