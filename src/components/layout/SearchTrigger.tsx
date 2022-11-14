@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ToolTip from '../ui/ToolTip'
 import SearchBar from './SearchBar'
+import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 
 // search bar shortcut for apple and windows
 const appleShortCut = '⌘ K'
@@ -34,8 +35,15 @@ const SearchTrigger = () => {
   return (
     <>
       <ToolTip message="search bar" delayDuration={500}>
-        <div className="border-2 rounded-md border-foreground p-1.5 bg-black" onClick={() => setShowSearch(true)}>
-          {system === 'windows' ? windowsShortCut : appleShortCut}
+        <div
+          className="border-2 rounded-md border-foreground bg-black flex justify-between items-center p-2 gap-5"
+          onClick={() => setShowSearch(true)}
+        >
+          <div className="text-gray-500 text-xs flex justify-center items-center">
+            <MagnifyingGlassIcon className="w-4 h-4 text-white" />
+            Search
+          </div>
+          <div className="text-white text-xs">{system === 'windows' ? windowsShortCut : appleShortCut}</div>
         </div>
       </ToolTip>
 
