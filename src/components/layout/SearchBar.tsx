@@ -55,10 +55,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
 
   const handleFetchTarget = (addressOrHandle: string) => {
     const fetchTarget = async () => {
-      if (addressOrHandle.trim() === '') {
-        return
-      }
-
       setOpen(false)
       const profiles = await rss3.getProfiles(addressOrHandle)
       const profileResult = parseProfiles(profiles)
@@ -78,6 +74,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
       setTargetStore(newTarget)
     }
 
+    if (addressOrHandle.trim() === '') {
+      return
+    }
+
     const fetchTargetPromise = fetchTarget()
     toast.promise(fetchTargetPromise, {
       pending: {
@@ -87,7 +87,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
         },
       },
       success: {
-        autoClose: 1000,
+        progressStyle: {
+          background: 'linear-gradient(to right, #3461FF, #8454EB)',
+        },
+        autoClose: 750,
         render() {
           return 'Success!'
         },

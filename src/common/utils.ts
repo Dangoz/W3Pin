@@ -29,8 +29,8 @@ export const dataURLtoFile = (dataurl: string, filename: string) => {
   return new File([u8arr], filename, { type: mime })
 }
 
-export const parseProfiles = (profiles: Profile[]): Identities & { avatar?: string } => {
-  const result: Identities & { avatar?: string } = { address: profiles[0].address }
+export const parseProfiles = (profiles: Profile[]): Identities & { avatar: string } => {
+  const result: Identities & { avatar: string } = { address: profiles[0].address, avatar: '/logo.svg' }
   profiles.forEach((profile) => {
     switch (profile.platform) {
       case 'Crossbell':
