@@ -11,7 +11,7 @@ const rss3API = axios.create({
 
 const rss3 = {
   async getIdentities(addressOrHandle: string): Promise<Identities> {
-    const response = await rss3API.get(`/identities/${addressOrHandle}`)
+    const response = await rss3API.get(`/ns/${addressOrHandle}`)
     if (response.data.error) {
       throw new Error(response.data.error)
     }

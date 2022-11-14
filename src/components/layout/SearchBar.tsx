@@ -55,8 +55,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
   const handleFetchTarget = (addressOrHandle: string) => {
     const fetchTarget = async () => {
       setOpen(false)
+      const identities = await rss3.getIdentities(addressOrHandle)
       const profiles = await rss3.getProfiles(addressOrHandle)
-      const profileResult = parseProfiles(profiles)
+      const profileResult = parseProfiles(profiles, identities)
 
       const newTarget = {
         ...profileResult,
