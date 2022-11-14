@@ -1,6 +1,5 @@
 import React from 'react'
 import useTarget from '@/hooks/useTarget'
-import SearchTrigger from '../layout/SearchTrigger'
 import Image from 'next/image'
 import PinCardWrapper from './PinCardWrapper'
 
