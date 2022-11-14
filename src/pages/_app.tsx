@@ -7,14 +7,14 @@ import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
 import { WagmiConfig } from 'wagmi'
 import { wagmiClient, chains } from '@/common/wagmi'
 import NavBar from '@/components/layout/NavBar'
-import { TargetContextProvider } from '@/store/targetContext'
+import { CardContextProvider } from '@/store/cardContext'
 import { UserContextProvider } from '@/store/userContext'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <UserContextProvider>
-        <TargetContextProvider>
+        <CardContextProvider>
           <WagmiConfig client={wagmiClient}>
             <RainbowKitProvider chains={chains} theme={darkTheme()}>
               <NavBar />
@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <ToastContainer />
             </RainbowKitProvider>
           </WagmiConfig>
-        </TargetContextProvider>
+        </CardContextProvider>
       </UserContextProvider>
     </>
   )
