@@ -7,6 +7,7 @@ import { handleError } from '@/common/notification'
 import rss3 from '@/common/rss3'
 import { Tags } from '@/types/rss3'
 import { parseProfiles } from '@/common/utils'
+import { parseAchievements } from '@/common/card'
 import { toast } from 'react-toastify'
 
 const suffixes = ['eth', 'lens', 'csb']
@@ -96,7 +97,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
         banner: '/banner.jpg',
         description:
           '2022 Footprints. \nViverra diam molestie aliquet quam vestibulum nunc tempor. Nulla nulla sapien eu tempus. Sit quis tristique convallis ullamcorper pretium consectetur vestibulum. Et amet mi mattis erat ultricies faucibus porta. Id augue at turpis elit rhoncus. ',
-        achievements: [],
+        achievements: parseAchievements(assets, collectible, social, transaction),
       }
       setCardStore(newCard)
 
