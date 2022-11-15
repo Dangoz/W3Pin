@@ -120,7 +120,15 @@ const OptionBar: React.FC<OptionBarProps> = ({ toggleEditMode, pinRef }) => {
   return (
     <>
       <Toolbar.Root className="w-fit h-14 bg-[rgba(26,26,26,.8)] backdrop-blur-sm rounded-md flex py-2 px-2 justify-evenly border-bgGrey">
-        <Toolbar.Button asChild onClick={confirmMintPin}>
+        <Toolbar.Button
+          asChild
+          onClick={() => {
+            if (userStore.address === '') {
+              return handleInfo('Please connect wallet first')
+            }
+            confirmMintPin()
+          }}
+        >
           <Button className="mr-2 w-32">
             {userStore.address === cardStore?.address ? (
               <>
@@ -136,7 +144,15 @@ const OptionBar: React.FC<OptionBarProps> = ({ toggleEditMode, pinRef }) => {
           </Button>
         </Toolbar.Button>
 
-        <Toolbar.Button asChild onClick={toggleEditMode}>
+        <Toolbar.Button
+          asChild
+          onClick={() => {
+            if (userStore.address === '') {
+              return handleInfo('Please connect wallet first')
+            }
+            toggleEditMode()
+          }}
+        >
           <Button className="mr-2 w-32 bg-gradient-to-l from-gradientOne to-gradientThree hover:from-gradientOne/80 hover:to-gradientThree/80">
             <Pencil2Icon className="w-4 h-4 mr-2" />
             Edit
