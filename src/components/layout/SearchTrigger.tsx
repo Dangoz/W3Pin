@@ -36,7 +36,7 @@ const SearchTrigger = () => {
     <>
       <ToolTip message="search bar" delayDuration={500}>
         <div
-          className="border-2 rounded-md border-foreground bg-black flex justify-between items-center p-2 gap-5"
+          className="border-2 rounded-md border-foreground bg-black flex justify-between items-center p-2 gap-5 h-fit"
           onClick={() => setShowSearch(true)}
         >
           <div className="text-gray-500 text-xs flex justify-center items-center">

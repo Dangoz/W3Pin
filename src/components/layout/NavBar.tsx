@@ -22,7 +22,7 @@ const NavBar: React.FC = () => {
         </div>
 
         {/* nav options */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <SearchTrigger />
           <Connection />
         </div>

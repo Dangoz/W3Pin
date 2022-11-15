@@ -29,11 +29,13 @@ const EditBannerImage: React.FC<EditBannerImageProps> = ({ open, setOpen }) => {
       const res = await api.post('/openai/generate', {
         prompt: imagePrompt,
       })
-      setBanner(res.data.image_url)
-      setIsGenerating(false)
+      const data_url = res.data.data_url
+      setBanner(data_url)
     } catch (error) {
       console.error((error as Error).message)
       handleError(error)
+    } finally {
+      setIsGenerating(false)
     }
   }
 

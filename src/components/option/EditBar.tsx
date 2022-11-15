@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import * as Toolbar from '@radix-ui/react-toolbar'
-import { Cross1Icon, Pencil1Icon, ImageIcon } from '@radix-ui/react-icons'
+import { Cross1Icon, Pencil1Icon, ImageIcon, StarIcon } from '@radix-ui/react-icons'
 import Button from '../ui/Button'
 import ToolTip from '../ui/ToolTip'
 import EditDescription from './EditDescription'
 import EditBannerImage from './EditBannerImage'
+import EditAchievements from './EditAchievements'
 import useCard from '@/hooks/useCard'
 
 interface EditBarProps {
@@ -15,6 +16,7 @@ const EditBar: React.FC<EditBarProps> = ({ toggleEditMode }) => {
   const { cardStore, setCardStore } = useCard()
   const [isEditDescriptionOpen, setIsEditDescriptionOpen] = useState<boolean>(false)
   const [isEditBannerImageOpen, setIsEditBannerImageOpen] = useState<boolean>(false)
+  const [isEditAchievementsOpen, setIsEditAchievementsOpen] = useState<boolean>(false)
 
   // discard all changes
   const handleExit = async () => {
@@ -36,7 +38,7 @@ const EditBar: React.FC<EditBarProps> = ({ toggleEditMode }) => {
 
   return (
     <>
-      <Toolbar.Root className="w-5/6 h-11 bg-[rgba(26,26,26,.8)] backdrop-blur-sm rounded-md flex justify-between items-center py-2 px-3 border-bgGrey sticky bottom-2.5">
+      <Toolbar.Root className="w-4/5 h-11 bg-[rgba(26,26,26,.8)] backdrop-blur-sm rounded-md flex justify-between items-center py-2 px-3 border-bgGrey sticky bottom-2.5">
         {/* left */}
         <div className="flex justify-center gap-3">
           <Toolbar.Button
@@ -65,6 +67,15 @@ const EditBar: React.FC<EditBarProps> = ({ toggleEditMode }) => {
               <Pencil1Icon className="w-3.5 h-3.5 text-white" />
             </Toolbar.Button>
           </ToolTip>
+
+          <ToolTip message="Achievements" side="top" delayDuration={250}>
+            <Toolbar.Button
+              className="flex items-center justify-center bg-black border-[1px] border-bgGrey rounded-md w-7 h-7 hover:bg-bgGrey"
+              onClick={() => setIsEditAchievementsOpen(true)}
+            >
+              <StarIcon className="w-3.5 h-3.5 text-white" />
+            </Toolbar.Button>
+          </ToolTip>
         </div>
 
         {/* right */}
@@ -82,6 +93,9 @@ const EditBar: React.FC<EditBarProps> = ({ toggleEditMode }) => {
 
       {/* edit banner image modal */}
       <EditBannerImage open={isEditBannerImageOpen} setOpen={setIsEditBannerImageOpen} />
+
+      {/* edit achievements modal */}
+      <EditAchievements open={isEditAchievementsOpen} setOpen={setIsEditAchievementsOpen} />
     </>
   )
 }

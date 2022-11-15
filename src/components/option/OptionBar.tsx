@@ -101,7 +101,11 @@ const OptionBar: React.FC<OptionBarProps> = ({ toggleEditMode, pinRef }) => {
             return `Pin minted successfully, txHash: ${data.data}`
           },
         },
-        error: 'Minting Pin Failed',
+        error: {
+          render({ data }) {
+            return `${(data as Error).message}`
+          },
+        },
       })
     } catch (error) {
       console.error((error as Error).message)
@@ -149,7 +153,7 @@ const OptionBar: React.FC<OptionBarProps> = ({ toggleEditMode, pinRef }) => {
 
       {/* confirm modal for mint pin */}
       <Modal open={isMintConfirmOpen} setOpen={setIsMintConfirmOpen} close={true}>
-        <div className=" w-72 h-44 bg-bgBlue/75 backdrop-blur-sm flex flex-col justify-center items-center gap-3">
+        <div className="w-72 h-44 bg-bgBlue/75 backdrop-blur-sm flex flex-col justify-center items-center gap-3">
           <div className="font-tomorrow text-lg">Mint Confirmation</div>
           <div className="flex gap-6">
             <Button variant="ghost" onClick={() => setIsMintConfirmOpen(false)}>
