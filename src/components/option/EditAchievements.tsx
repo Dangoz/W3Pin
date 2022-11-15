@@ -35,9 +35,9 @@ const EditAchievements: React.FC<EditDescriptionProps> = ({ open, setOpen }) => 
               <div key={achievement} className="flex justify-center items-center gap-2">
                 <div className="font-bold font-tomorrow">{achievement}</div>
                 <Checkbox.Root
-                  checked={achievements.includes(achievement)}
+                  checked={achievements.includes(achievement.toLowerCase())}
                   className="w-5 h-5 bg-black border-bgGrey border-2"
-                  onClick={() => handleToggleAchievement(achievement)}
+                  onClick={() => handleToggleAchievement(achievement.toLocaleLowerCase())}
                 >
                   <Checkbox.Indicator>
                     <CheckIcon />
