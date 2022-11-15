@@ -13,7 +13,7 @@ const ToolTip: React.FC<ToolTipProps> = ({ children, message = 'Tooltip', delayD
   return (
     <Tooltip.Provider delayDuration={delayDuration}>
       <Tooltip.Root>
-        <Tooltip.Trigger>{children}</Tooltip.Trigger>
+        <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
         <Tooltip.Portal>
           <Tooltip.Content side={side} className="bg-bgGrey text-white/80 rounded-md px-2 py-1">
             {message}

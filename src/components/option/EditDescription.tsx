@@ -15,7 +15,7 @@ const EditDescription: React.FC<EditDescriptionProps> = ({ open, setOpen }) => {
   return (
     <>
       <Modal open={open} setOpen={setOpen} blur="sm" close>
-        <div className="w-80 h-60 bg-bgBlue/75 backdrop-blur-sm flex flex-col p-2 gap-2">
+        <div className="w-96 h-60 bg-bgBlue/75 backdrop-blur-sm flex flex-col p-3 gap-2">
           <div className="font-tomorrow font-bold text-lg">Description</div>
 
           <textarea

@@ -45,6 +45,7 @@ const EditBar: React.FC<EditBarProps> = ({ toggleEditMode }) => {
           >
             <Cross1Icon />
           </Toolbar.Button>
+
           <Toolbar.Separator className="w-0.5 bg-white/50 mx-2" />
 
           <ToolTip message="Banner Image" side="top" delayDuration={250}>

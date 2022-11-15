@@ -12,7 +12,7 @@ const Banner: React.FC = () => {
       {cardStore && (
         <div className="w-full h-full rounded-t-md">
           <AspectRatio.Root ratio={16 / 9} className="relative">
-            <Image src={cardStore.banner} alt="banner" fill sizes="100%" className="rounded-t-md" />
+            <img src={cardStore.banner} alt="banner" className="rounded-t-md w-full h-full absolute" />
             <div className="absolute  w-full h-full bg-black bg-opacity-30 flex justify-between items-center px-9 pt-20 rounded-t-md">
               <div className="flex flex-col justify-center items-center gap-3">
                 <div className="w-full h-full flex justify-center items-center">
