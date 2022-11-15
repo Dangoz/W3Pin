@@ -17,7 +17,8 @@ const Connection = () => {
     const syncUserProfiles = async () => {
       try {
         const profiles = await rss3.getProfiles(address)
-        const result = profiles.length ? parseProfiles(profiles) : { address }
+        const identities = await rss3.getIdentities(address)
+        const result = profiles.length ? parseProfiles(identities, profiles) : { address }
         setUserStore(result)
       } catch (error) {
         handleError(error)
