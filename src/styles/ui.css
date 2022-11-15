@@ -1,0 +1,9 @@
+.cardBG {
+  background: radial-gradient(100.83% 173.11% at 2.63% -0.83%, #0F2326 0%, #0A142A 47.62%, #302437 100%);
+  border-radius: 16px;
+}
+
+.statsBG {
+  background: linear-gradient(180deg, rgba(52, 97, 255, 0.4) 0%, rgba(132, 84, 235, 0.4) 100%);
+  backdrop-filter: blur(5px);
+}

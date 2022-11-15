@@ -9,6 +9,12 @@ import { wagmiClient, chains } from '@/common/wagmi'
 import NavBar from '@/components/layout/NavBar'
 import { CardContextProvider } from '@/store/cardContext'
 import { UserContextProvider } from '@/store/userContext'
+import { Tomorrow } from '@next/font/google'
+
+const tomorrow = Tomorrow({
+  weight: '400',
+  variable: '--font-tomorrow',
+})
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -18,7 +24,9 @@ export default function App({ Component, pageProps }: AppProps) {
           <WagmiConfig client={wagmiClient}>
             <RainbowKitProvider chains={chains} theme={darkTheme()}>
               <NavBar />
-              <Component {...pageProps} />
+              <main className={`${tomorrow.variable}`}>
+                <Component {...pageProps} />
+              </main>
               <ToastContainer />
             </RainbowKitProvider>
           </WagmiConfig>

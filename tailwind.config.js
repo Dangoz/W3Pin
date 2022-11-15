@@ -1,3 +1,5 @@
+// const { fontFamily } = require('tailwindcss/defaultTheme')
+
 module.exports = {
   mode: 'jit',
   content: ["./src/pages/**/*.{js,jsx,ts,tsx}", "./src/components/**/*.{js,jsx,ts,tsx}"],
@@ -7,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        tomorrow: ['var(--font-tomorrow)']
+      },
       colors: {
         background: '#0d1117',
         foreground: '#161b22',

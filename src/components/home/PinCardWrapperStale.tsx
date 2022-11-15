@@ -10,7 +10,6 @@ import api, { baseUrl } from '@/common/api'
 import axios from 'axios'
 import { handleSuccess, handleError, handleInfo } from '@/common/notification'
 import { toast } from 'react-toastify'
-import nftport from '@/common/nftport'
 import { convertBase64ToFile } from '@/common/utils'
 import type { IPFSMetadataInput, IPFSMetadataOutput } from '@/types/nftport'
 
@@ -170,7 +169,7 @@ const PinCardWrapper: React.FC = () => {
           <div className="flex justify-start items-center gap-2 px-5 break-words text-sm">{description}</div>
         </div>
 
-        {/* {!editMode ? (
+        {!editMode ? (
           <div className="flex items-center w-96 primaryShadow">
             <Button
               className="w-1/3 rounded-none"
@@ -184,7 +183,7 @@ const PinCardWrapper: React.FC = () => {
             </Button>
 
             <Button className="w-1/3 rounded-none" shadow={false} variant="secondary" onClick={handleMintPin}>
-              {userStore.address === targetStore.address ? 'Mint' : 'Gift'}
+              {userStore.address === cardStore.address ? 'Mint' : 'Gift'}
             </Button>
 
             <Button className="w-1/3 rounded-none" shadow={false} onClick={handleDownloadPin}>
@@ -193,7 +192,7 @@ const PinCardWrapper: React.FC = () => {
           </div>
         ) : (
           <></>
-        )} */}
+        )}
       </div>
     </>
   )

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import useCard from '@/hooks/useCard'
 import Image from 'next/image'
-import PinCardWrapper from './PinCardWrapperStale'
+import PinCardWrapper from './PinCardWrapper'
 
 const HomeContainer: React.FC = () => {
   const { cardStore, setCardStore } = useCard()
@@ -20,7 +20,7 @@ const HomeContainer: React.FC = () => {
       <div className="flex justify-center items-center w-full min-h-screen">
         {!cardStore ? (
           <div className="flex items-center justify-center gap-2">
-            <div className="relative w-80 h-80">
+            <div className="w-80 h-80 relative">
               <Image
                 fill
                 alt="logo"
