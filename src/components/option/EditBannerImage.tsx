@@ -106,7 +106,10 @@ const EditBannerImage: React.FC<EditBannerImageProps> = ({ open, setOpen }) => {
             <div className="w-full">
               <textarea
                 disabled={isGenerating}
-                className={clsx('w-full h-24 bg-bgBlue/75 rounded-md p-2', isGenerating && 'cursor-wait loader')}
+                className={clsx(
+                  'w-full h-24 bg-bgBlue/75 rounded-md p-2 border-bgGrey border-2',
+                  isGenerating && 'cursor-wait loader',
+                )}
                 value={imagePrompt}
                 placeholder="A digital illustration of a steampunk flying machine in the sky with cogs and mechanisms, 4k, detailed, trending in artstation, fantasy vivid colors"
                 onChange={(e) => setImagePrompt(e.target.value)}
