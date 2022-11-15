@@ -94,7 +94,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ open, setOpen }) => {
         donation,
         governance,
         poap,
-        banner: '/banner.jpg',
+        banner: '/banner4.jpg',
         description:
           '2022 Footprints. \nViverra diam molestie aliquet quam vestibulum nunc tempor. Nulla nulla sapien eu tempus. Sit quis tristique convallis ullamcorper pretium consectetur vestibulum. Et amet mi mattis erat ultricies faucibus porta. Id augue at turpis elit rhoncus. ',
         achievements: parseAchievements(assets, collectible, social, transaction),

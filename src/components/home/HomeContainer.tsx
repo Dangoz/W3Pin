@@ -21,14 +21,7 @@ const HomeContainer: React.FC = () => {
         {!cardStore ? (
           <div className="flex items-center justify-center gap-2">
             <div className="w-80 h-80 relative">
-              <Image
-                fill
-                alt="logo"
-                src="/logo-bg.png"
-                priority={true}
-                className="rounded-full primaryShadow"
-                sizes="100%"
-              />
+              <img alt="logo" src="/logo-bg.png" className="rounded-full primaryShadow" />
             </div>
           </div>
         ) : (
