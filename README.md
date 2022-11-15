@@ -4,7 +4,8 @@
 
 ## Links
 
-- **App Link:** https://w3pin.xyz
+- **Application:** https://w3pin.xyz
+- **Video Demo:** https://www.youtube.com/watch?v=ONPPmWt2YfQ
 
 ## Description
 
