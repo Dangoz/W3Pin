@@ -1,65 +1,38 @@
-import React, { useState } from 'react'
+import React from 'react'
+import * as Toolbar from '@radix-ui/react-toolbar'
+import { Pencil2Icon, DownloadIcon, RocketIcon } from '@radix-ui/react-icons'
 import Button from '../ui/Button'
-import * as htmlToImage from 'html-to-image'
-import { handleSuccess, handleError, handleInfo } from '@/common/notification'
 
-interface EditBarProps {
-  editMode: boolean
-  toggleEditMode: () => void
-  pinRef: React.RefObject<HTMLDivElement>
-}
+interface OptionBarProps {}
 
-const OptionBar: React.FC<EditBarProps> = ({ editMode, toggleEditMode, pinRef }) => {
-  const [pinImage, setPinImage] = useState<string>('')
-
-  const generateImage = async () => {
-    const node = pinRef.current
-    if (node) {
-      const data = await htmlToImage.toPng(node)
-      return data
-    }
-    return ''
-  }
-
-  const handleDownloadPin = async () => {
-    const pinImageFile = pinImage === '' ? await generateImage() : pinImage
-    if (pinImageFile === '') {
-      handleInfo('Image Gnereation Failed, Please Try Again')
-      return
-    }
-
-    const link = document.createElement('a')
-    link.download = 'W3Pin.png'
-    link.href = pinImageFile
-    link.click()
-  }
-
+const OptionBar: React.FC<OptionBarProps> = () => {
   return (
     <>
-      {!editMode ? (
-        <div className="flex items-center w-96 primaryShadow">
+      <Toolbar.Root className="w-96 h-14 bg-[rgba(26,26,26,.8)] backdrop-blur-sm rounded-md flex py-2 px-2 justify-evenly">
+        <Toolbar.Button asChild>
+          <Button className="mr-2 w-28" size="sm">
+            <RocketIcon className="w-3 h-3 mr-2" />
+            Gift
+          </Button>
+        </Toolbar.Button>
+        {/* <Toolbar.Separator className='' /> */}
+        <Toolbar.Button asChild>
           <Button
-            className="w-1/3 rounded-none"
-            shadow={false}
-            onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' })
-              toggleEditMode()
-            }}
+            size="sm"
+            className="mr-2 w-28 bg-gradient-to-l from-gradientOne to-gradientThree hover:from-gradientOne/80 hover:to-gradientThree/80"
           >
+            <Pencil2Icon className="w-3 h-3 mr-2" />
             Edit
           </Button>
-          {/* 
-        <Button className="w-1/3 rounded-none" shadow={false} variant="secondary" onClick={handleMintPin}>
-          {cardS.address === cardStore.address ? 'Mint' : 'Gift'}
-        </Button> */}
+        </Toolbar.Button>
 
-          <Button className="w-1/3 rounded-none" shadow={false} onClick={handleDownloadPin}>
+        <Toolbar.Button asChild>
+          <Button className="w-28" variant="secondary" size="sm">
+            <DownloadIcon className="w-3 h-3 mr-1" />
             Download
           </Button>
-        </div>
-      ) : (
-        <></>
-      )}
+        </Toolbar.Button>
+      </Toolbar.Root>
     </>
   )
 }
