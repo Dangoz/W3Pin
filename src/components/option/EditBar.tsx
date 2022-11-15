@@ -92,10 +92,10 @@ const EditBar: React.FC<EditBarProps> = ({ toggleEditMode }) => {
       {isEditDescriptionOpen && <EditDescription open={isEditDescriptionOpen} setOpen={setIsEditDescriptionOpen} />}
 
       {/* edit banner image modal */}
-      <EditBannerImage open={isEditBannerImageOpen} setOpen={setIsEditBannerImageOpen} />
+      {isEditBannerImageOpen && <EditBannerImage open={isEditBannerImageOpen} setOpen={setIsEditBannerImageOpen} />}
 
       {/* edit achievements modal */}
-      <EditAchievements open={isEditAchievementsOpen} setOpen={setIsEditAchievementsOpen} />
+      {isEditAchievementsOpen && <EditAchievements open={isEditAchievementsOpen} setOpen={setIsEditAchievementsOpen} />}
     </>
   )
 }
